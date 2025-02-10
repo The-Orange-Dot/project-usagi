@@ -1,4 +1,4 @@
-# Project USAGI
+# Project U.S.A.G.I.
 
  ## U: Usually
  ## S: Skips
