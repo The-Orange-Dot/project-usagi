@@ -25,7 +25,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1 if sys.platform == 'darwin' else 2
 RATE = 44100
-SILENCE_THRESHOLD = 200  # Adjust based on your environment
+SILENCE_THRESHOLD = 400  # Adjust based on your environment
 SILENCE_TIMEOUT = 1.5    # Seconds of silence before stopping
 
 def record():

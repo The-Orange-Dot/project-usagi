@@ -44,10 +44,7 @@ while True:
     print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
     print("\033[37m") # Resets the color of text back to white
 
-    # Removes audio file
-    os.remove("./audio.wav")
-
-    time.sleep(3)
+    time.sleep(2)
   else:
     print("NO TEXT!!")
 
@@ -55,8 +52,9 @@ while True:
       print("Ending Listener")
       break
     else:
-      counter+=1
+      # counter+=1
       print(f"Keeing an ear out. Retrying {6 - counter} more times.")
 
 
-
+# Removes audio file
+os.remove("./audio.wav")
