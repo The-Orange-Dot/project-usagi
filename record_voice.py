@@ -61,7 +61,7 @@ def record():
 
                 # Reset counter when voice is detected
                 if rms > SILENCE_THRESHOLD or np.isnan(rms):
-                    consecutive_silent = 1
+                    consecutive_silent = 0
                 else:
                     consecutive_silent += 1
 
