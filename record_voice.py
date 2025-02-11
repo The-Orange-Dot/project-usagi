@@ -8,12 +8,9 @@ import numpy as np
 from contextlib import contextmanager
 from ctypes import CFUNCTYPE, c_char_p, c_int, cdll
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
-
 def py_error_handler(filename, line, function, err, fmt):
     pass
-
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
-
 @contextmanager
 def noalsaerr():
     asound = cdll.LoadLibrary('libasound.so')
@@ -25,7 +22,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1 if sys.platform == 'darwin' else 2
 RATE = 44100
-SILENCE_THRESHOLD = 400  # Adjust based on your environment
+SILENCE_THRESHOLD = 800  # Adjust based on your environment (Decrease for a more sensative )
 SILENCE_TIMEOUT = 1.5    # Seconds of silence before stopping
 
 def record():
@@ -38,7 +35,7 @@ def record():
 
             stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True)
 
-            print('Recording...')
+            print('Listening...')
             consecutive_silent = 0
             max_silent_chunks = int(SILENCE_TIMEOUT * RATE / CHUNK)
 
@@ -67,9 +64,8 @@ def record():
 
                 # Stop recording if silence persists
                 if consecutive_silent > max_silent_chunks:
-                    print('Stopped recording.')
+                    # print('Stopped recording.')
                     break
 
             stream.close()
             p.terminate()
-

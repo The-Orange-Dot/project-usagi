@@ -1,9 +1,13 @@
+import suppress
+suppress.suppress_jack_errors()
+
 import record_voice
 import whisper
 import ollama_input
 import os
 import json
 import time
+import librosa
 
 import helpers.concat_files as concat
 
@@ -24,36 +28,49 @@ file_name = f"./mocchan/data.json"
 
 counter = 0
 
+print()
+print("========================================")
+print("Starting up Mocchan")
+print("========================================")
+print()
+
 while True:
   # Records the voice of the user and transcribes it
   record_voice.record()
-  transcribed_text = whisper.transcribe()
+
+  sound_file_duration = librosa.get_duration(path="./audio.wav")
+  # print(sound_file_duration)
   
-  if transcribed_text:
-    print(transcribed_text)
+  if sound_file_duration > 1.6:
+    transcribed_text = whisper.transcribe()
+    
+    if transcribed_text:
+      print(transcribed_text)
 
-    # Calls Deepseek to respond to transcribed text
-    ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
+      # Calls Deepseek to respond to transcribed text
+      ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
 
-    # Concats the user's transcribed text and the ollamas
-    concat.concat_text(file_name, "user", transcribed_text)
-    concat.concat_text(file_name, "assistant", ollama_response["answer"])
+      # Concats the user's transcribed text and the ollamas
+      concat.concat_text(file_name, "user", transcribed_text)
+      concat.concat_text(file_name, "assistant", ollama_response["answer"])
 
-    print("")
-    print(f"\033[96m[YOU]: {transcribed_text}") # For Cyan colored text: \033[96m
-    print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
-    print("\033[37m") # Resets the color of text back to white
+      print("")
+      print(f"\033[96m[YOU]: {transcribed_text}") # For Cyan colored text: \033[96m
+      print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
+      print("\033[37m") # Resets the color of text back to white
 
-    time.sleep(2)
-  else:
-    print("NO TEXT!!")
-
-    if counter == 5:
-      print("Ending Listener")
-      break
+      time.sleep(2)
     else:
-      # counter+=1
-      print(f"Keeing an ear out. Retrying {6 - counter} more times.")
+      print("NO TEXT!!")
+
+      if counter == 5:
+        print("Ending Listener")
+        break
+      else:
+        # counter+=1
+        print(f"Keeing an ear out. Retrying {6 - counter} more times.")
+  else:
+    pass
 
 
 # Removes audio file

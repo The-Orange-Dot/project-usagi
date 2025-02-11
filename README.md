@@ -19,9 +19,9 @@ This may sound like I'm stating water is wet, but you **need a mic** for this to
 
 ### Installing Dependencies
   ```
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install numpy pyaudio ollama faster-whisper
+    python -m venv ~/venv
+    source ~/venv/bin/activate
+    pip install numpy pyaudio ollama faster-whisper librosa
   ```
 
 ## Tasks
