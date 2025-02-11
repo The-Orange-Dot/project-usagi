@@ -39,15 +39,14 @@ while True:
   record_voice.record()
 
   sound_file_duration = librosa.get_duration(path="./audio.wav")
-  # print(sound_file_duration)
   
   if sound_file_duration > 1.6:
+    print("Transcribing....")
     transcribed_text = whisper.transcribe()
     
     if transcribed_text:
-      print(transcribed_text)
-
       # Calls Deepseek to respond to transcribed text
+      print("Fetching...")
       ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
 
       # Concats the user's transcribed text and the ollamas
@@ -69,8 +68,6 @@ while True:
       else:
         # counter+=1
         print(f"Keeing an ear out. Retrying {6 - counter} more times.")
-  else:
-    pass
 
 
 # Removes audio file
