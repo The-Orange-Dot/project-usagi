@@ -15,8 +15,11 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 - WhisperModel - For transcribing audio into text
 - pyaudio - For inputing voice and saving it as a wav file to inject into WhisperModel
 
+This may sound like I'm stating water is wet, but you **need a mic** for this to work.
+
 ### Installing Dependencies
   ```
+    python -m venv .venv
     source .venv/bin/activate
     pip install numpy pyaudio ollama faster-whisper
   ```
