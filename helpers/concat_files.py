@@ -5,8 +5,6 @@ import json
 def concat_text(file_to_concat, role, text):
     # Concats the transcribed text to the bottom of the current date's file
 
-  print(text)
-
   with open(file_to_concat, 'r') as file:
     existing_data = json.load(file)
     existing_data.append({"role": role, "content": text})

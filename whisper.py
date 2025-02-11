@@ -1,4 +1,4 @@
-from faster_whisper import WhisperModel
+from faster_whisper import WhisperModel, BatchedInferencePipeline
 
 def transcribe():
     model_size = "small.en"
@@ -15,12 +15,13 @@ def transcribe():
     # model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
     # or run on CPU with INT8
     model = WhisperModel(model_size, device="cpu", compute_type="int8")
-    segments, info = model.transcribe("audio.wav", beam_size=5, language="en")
+
+    batched_model = BatchedInferencePipeline(model=model)
+    segments, info = batched_model.transcribe("audio.wav", beam_size=5, language="en", vad_parameters=dict(min_silence_duration_ms=2000))
 
     # print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
 
     for segment in segments:
-        print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
-
-    return segment.text
+        # print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
+        return segment.text
 

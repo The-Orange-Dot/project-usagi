@@ -32,7 +32,8 @@ ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
 concat.concat_text(file_name, "user", transcribed_text)
 concat.concat_text(file_name, "assistant", ollama_response["answer"])
 
-# print(ollama_response["answer"])
+print(f"\033[96m[YOU]: {transcribed_text}") # For Cyan colored text: \033[96m
+print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
 
 # Removes audio file
 os.remove("./audio.wav")
