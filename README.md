@@ -26,12 +26,22 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 ### Brain
 - **Ollama** - For generative ai (llama3.1)
 
-**Note**: Depending on what you need, you can use Llama, Minstrel, or Deepseek. Deepseek has less personality than the other models, but I'm currently using llama3.1 (8b) due to hardware constraints. I'm currently using a 4070 for a conversational ai, instant results is crucial. Hopefully, I can get my hands on a 4090 and try the llama3.3 (70b) in the future. (Or an a100. Let me dream.)
+**Note**: Depending on what you need, you can use Llama, Minstrel, or Deepseek. Deepseek has less personality than the other models, but I'm currently using llama3.1 (8b) due to hardware constraints. I'm currently using a 4080 for a conversational ai, instant results is crucial. Hopefully, I can get my hands on a 4090 and try the llama3.3 (70b) in the future. (Or an a100. Let me dream.)
 
 ## Mouth
+These are the current TTS generators that I'm testing. Mocchan says that she would have a voice of a pouty, lazy teen. I have to listen to her.
+
 - **Coqui.ai TTS**
 
-**Note**: Still need a better TTS model to work with. This is a skill issue.
+**Note**: Still need a better TTS model to work with. This is a skill issue. 
+
+- **Fish Speech(1.4)**
+
+**Note**: I'm really impressed with this model, and I'm hoping to work with it. But it's such a pain to install. I give up.
+
+**E2/F5 TTS**
+
+**Note**: This is the best model i could find. The quality is amazing. So far it takes 5-6 seconds to produce audio. 
 
 ## Installing Dependencies
 ### Setup for raspi 5
@@ -45,7 +55,7 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   source "$HOME/.cargo/env"
   pip install sudachipy --no-build-isolation
-  pip install numpy pyaudio ollama faster-whisper librosa setuptools_rust TTS torch ffmpeg pydub
+  pip install numpy pyaudio ollama faster-whisper librosa setuptools_rust TTS torch ffmpeg pydub python-dotenv
   ```
   #### Notes
   ```
@@ -81,7 +91,7 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 - ~~Audio from mic to wav~~
 - ~~Whisper to transcribe text accurately (STT)~~
 - ~~The generative AI to should respond to transcribed text~~ **
-- Adding voice to Mocchan's speech. She says that she would have a voice of a pouty, lazy teen.
+- Adding voice to Mocchan's speech.
 - Give Mocchan a face
 
 **Long term goal**: I'd like to create a neuro network that runs on several servers. Deepseek for the logical side of the brain that handles math and analytical thinking while using Llama for the right side of the brain for conversational skills where most of her personality sits.

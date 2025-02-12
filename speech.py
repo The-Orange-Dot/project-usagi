@@ -1,18 +1,22 @@
 import torch
-from TTS.api import TTS
 import pyaudio
 import wave
 import os
+from dotenv import load_dotenv, dotenv_values 
+load_dotenv() 
 
 # Get device
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# # Init TTS with the target model name
-tts = TTS(model_name="tts_models/en/jenny/jenny").to(device)
-
 def speak(text):
-  tts.tts_to_file(text, speaker_wav="./voice-sample/nimi-sample-voice.mp3", file_path="./tmp/output.wav")
   print("Voice generated....IF I HAD ONE!!!")
+
+F5_PATH = os.getenv("F5_PATH")
+
+F5_PATH = os.environ["F5_PATH"]
+f5_command = f"{F5_PATH}"
+
+os.system(f5_command)
 
 ## ============ UNCOMMENT BELOW TO ADD SPEECH WHEN YOU GET A SPEAKER ============================
 
