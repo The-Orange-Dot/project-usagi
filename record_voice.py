@@ -21,7 +21,7 @@ def noalsaerr():
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1 if sys.platform == 'darwin' else 2
-RATE = 44100
+RATE = 16000
 SILENCE_THRESHOLD = 800  # Adjust based on your environment (Decrease for a more sensative )
 SILENCE_TIMEOUT = 1.5    # Seconds of silence before stopping
 
@@ -35,7 +35,6 @@ def record():
 
             stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True)
 
-            print('Listening...')
             consecutive_silent = 0
             max_silent_chunks = int(SILENCE_TIMEOUT * RATE / CHUNK)
 

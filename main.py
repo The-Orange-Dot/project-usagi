@@ -34,6 +34,9 @@ print("Starting up Mocchan")
 print("========================================")
 print()
 
+print("You're now talking to Mocchan...")
+
+
 while True:
   # Records the voice of the user and transcribes it
   record_voice.record()
@@ -41,7 +44,7 @@ while True:
   sound_file_duration = librosa.get_duration(path="./audio.wav")
   
   if sound_file_duration > 1.6:
-    print("Transcribing....")
+    print("Awaiting Response....")
     transcribed_text = whisper.transcribe()
     
     if transcribed_text:
@@ -66,10 +69,16 @@ while True:
       print("No text to transcribe...")
   else:
     if counter == 50:
-      print("Mocchan was left on and left alone. Going to sleep.")
+      print("Mocchan was left alone for too long. She's going to sleep.")
       break
-    elif counter == 15:
+    elif counter == 10 or counter == 20:
+      print('Listening...')
+      counter+=1
+    elif counter == 30:
       print("Mocchan is still waiting here...")
+      counter+=1
+    elif counter == 40:
+      print("Mocchan's about to leave...")
       counter+=1
     else:
       counter+=1
