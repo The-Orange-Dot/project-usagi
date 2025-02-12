@@ -11,7 +11,7 @@ def suppress_jack_errors():
         r'Cannot connect to server request channel',
         r'jack server is not running',
         r'JackShmReadWritePtr',
-        r'RuntimeWarning: invalid value encountered in sqrt  rms = np.max(np.sqrt(np.mean(audio_data**2, axis=0) + 1e-7))'
+        r'RuntimeWarning: invalid value encountered in sqrt rms = np.max(np.sqrt(np.mean(audio_data**2, axis=0) + 1e-7))'
     ]
     
     # Save original stderr file descriptor

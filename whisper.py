@@ -1,4 +1,5 @@
 from faster_whisper import WhisperModel, BatchedInferencePipeline
+import os
 
 def transcribe():
     model_size = "tiny.en"
@@ -18,10 +19,10 @@ def transcribe():
 
     batched_model = BatchedInferencePipeline(model=model)
     segments, info = batched_model.transcribe("./tmp/audio.wav", beam_size=5, language="en", vad_parameters=dict(min_silence_duration_ms=2000))
-
-    # print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
+    
+    # Removes audio file
+    os.remove("./tmp/audio.wav")
 
     for segment in segments:
-        # print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
         return segment.text
 

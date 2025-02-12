@@ -1,4 +1,7 @@
 # Project U.S.A.G.I
+
+![screenshot](./images/project_usagi.png)
+
 **U**sually **S**kips **A**ll **G**iven **I**nstructions
 
 This AI will be named Mocchan and will be based off a rabbit.
@@ -9,17 +12,31 @@ The concept is quite simple. A virtual assistant is supposed to make our lives e
 This also gives me an oppertunity to learn Python and AI Tech. So something comes out of it, I guess.
 
 ## Dependencies
+
+### Main
 - Python3
 - Pip
-- Ollama - For generative ai
-- WhisperModel - For transcribing audio into text
+
+### Ears
 - pyaudio - For inputing voice and saving it as a wav file to inject into WhisperModel
-- TTS - For synthesizing and training voices for Text-to-Speech
+- WhisperModel - For transcribing audio into text
 
-This may sound like I'm stating water is wet, but you **need a mic** for this to work.
+**Note**: This may sound like I'm stating water is wet, but you **need a mic** for this to work. I'm currently using a Raspi 5 to transcribe a tiny.en model. Hopefully I will get a NUC or something and run it on that to transcribe faster and more accurately in the future. The current transcribe time is about 2-3 seconds. Lets get it down to 1!
 
-### Installing Dependencies
+### Brain
+- Ollama - For generative ai (llama3.1)
+
+**Note**: Depending on what you need, you can use Llama, Minstrel, or Deepseek. Deepseek has less personality than the other models, but I'm currently using llama3.1 (8b) due to hardware constraints. I'm currently using a 4070 for a conversational ai, instant results is crucial. Hopefully, I can get my hands on a 4090 and try the llama3.3 (70b) in the future. (Or an a100. Let me dream.)
+
+## Mouth
+- Coqui.ai TTS
+
+**Note**: Still need a better TTS model to work with. This is a skill issue.
+
+## Installing Dependencies
+### Setup for raspi 5
   ```
+  sudo apt-get update && sudo apt-get upgrade -y 
   python3 -m venv ~/.venv
   source ~/.venv/bin/activate
   sudo apt install portaudio19-dev -y
@@ -30,28 +47,41 @@ This may sound like I'm stating water is wet, but you **need a mic** for this to
   pip install sudachipy --no-build-isolation
   pip install numpy pyaudio ollama faster-whisper librosa setuptools_rust TTS torch ffmpeg pydub
   ```
-
-```
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+  #### Notes
+  ```
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  ```
   This is for rust which is needed for sudachipy (a dependancy for TTS)
 
-## Tasks
+### Setup for brain (Machine running ollama LLM)
+  Install ollama
+
+  **Installation for Linux**
+  ```
+  sudo apt-get update && sudo apt-get upgrade -y
+  sudo apt-get install curl
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+
+  **Pulling model**
+  Change the model if you want
+
+  ```
+  ollama pull llama3.1
+  ```
+
+  **Serving ollama**
+  Default port it 11434
+
+  ```
+  ollama serve
+  ```
+
+## To-Dos/Goals
 - ~~Audio from mic to wav~~
-- ~~Whisper to transcribe text accurately (STT)~~ *
+- ~~Whisper to transcribe text accurately (STT)~~
 - ~~The generative AI to should respond to transcribed text~~ **
 - Adding voice to Mocchan's speech. She says that she would have a voice of a pouty, lazy teen.
 - Give Mocchan a face
 
-* Currently using a Raspberry pi 5 to transcribe a tiny.en model. Hopefully I will get a NUC or something and run it on that to transcribe more accurately in the future.
-
-** I'm running the LLM using Llama3.1, an 8b model to generate the text. It's the only model that performs well and is instant with the GPU I currently have.
-
 **Long term goal**: I'd like to create a neuro network that runs on several servers. Deepseek for the logical side of the brain that handles math and analytical thinking while using Llama for the right side of the brain for conversational skills where most of her personality sits.
-
-## Installation
-This has been running on a raspbarry pi 5 for a bit. 
-
-```
-sudo apt-get update && sudo apt-get upgrade -y 
-```

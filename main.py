@@ -1,5 +1,5 @@
 import suppress
-# suppress.suppress_jack_errors()
+suppress.suppress_jack_errors()
 
 import record_voice
 import whisper
@@ -83,5 +83,3 @@ while True:
     else:
       counter+=1
 
-  # Removes audio file
-  os.remove("./tmp/audio.wav")
