@@ -7,7 +7,7 @@
 This AI will be named Mocchan and will be based off a rabbit.
 
 ## Concept
-The concept is quite simple. A virtual assistant is supposed to make our lives easier by helping us do tasks, usually through text or voice control. However, this virtual AI assistant is useless.
+The concept is quite simple. A virtual assistant is supposed to make our lives easier by helping us do tasks, usually through text or voice control. However, this virtual AI assistant is useless and not very nice.
 
 This also gives me an oppertunity to learn Python and AI Tech. So something comes out of it, I guess.
 
@@ -18,18 +18,18 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 - Pip
 
 ### Ears
-- pyaudio - For inputing voice and saving it as a wav file to inject into WhisperModel
-- WhisperModel - For transcribing audio into text
+- **pyaudio** - For inputing voice and saving it as a wav file to inject into WhisperModel
+- **WhisperModel** - For transcribing audio into text
 
 **Note**: This may sound like I'm stating water is wet, but you **need a mic** for this to work. I'm currently using a Raspi 5 to transcribe a tiny.en model. Hopefully I will get a NUC or something and run it on that to transcribe faster and more accurately in the future. The current transcribe time is about 2-3 seconds. Lets get it down to 1!
 
 ### Brain
-- Ollama - For generative ai (llama3.1)
+- **Ollama** - For generative ai (llama3.1)
 
 **Note**: Depending on what you need, you can use Llama, Minstrel, or Deepseek. Deepseek has less personality than the other models, but I'm currently using llama3.1 (8b) due to hardware constraints. I'm currently using a 4070 for a conversational ai, instant results is crucial. Hopefully, I can get my hands on a 4090 and try the llama3.3 (70b) in the future. (Or an a100. Let me dream.)
 
 ## Mouth
-- Coqui.ai TTS
+- **Coqui.ai TTS**
 
 **Note**: Still need a better TTS model to work with. This is a skill issue.
 
@@ -54,7 +54,7 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
   This is for rust which is needed for sudachipy (a dependancy for TTS)
 
 ### Setup for brain (Machine running ollama LLM)
-  Install ollama
+  I'm working in linux. Sorry Windows and Mac people, you can install it by going to the documentation: [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file#ollama) 
 
   **Installation for Linux**
   ```
