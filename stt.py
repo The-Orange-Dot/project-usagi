@@ -8,6 +8,7 @@ import os
 import json
 import time
 import librosa
+import speech
 
 import helpers.concat_files as concat
 
@@ -18,7 +19,6 @@ with open('mocchan/data.json', "r") as file:
   file_path = os.path.join(folder_path, file_name)
   with open(file_path, 'r+') as file:
     message_data = json.load(file)
-
 
 # Creates folder for storing history
 history_folder = 'mocchan'
@@ -46,8 +46,10 @@ while True:
     
     if transcribed_text:
       # Calls Deepseek to respond to transcribed text
-      print("Fetching...")
       ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
+
+      # Allows Mocchan to speak
+      # speech.speak(ollama_response["answer"])
 
       # Concats the user's transcribed text and the ollamas
       concat.concat_text(file_name, "user", transcribed_text)
@@ -58,17 +60,19 @@ while True:
       print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
       print("\033[37m") # Resets the color of text back to white
 
+      counter = 0
       time.sleep(2)
     else:
-      print("NO TEXT!!")
+      print("No text to transcribe...")
+  else:
+    if counter == 50:
+      print("Mocchan was left on and left alone. Going to sleep.")
+      break
+    elif counter == 15:
+      print("Mocchan is still waiting here...")
+      counter+=1
+    else:
+      counter+=1
 
-      if counter == 5:
-        print("Ending Listener")
-        break
-      else:
-        # counter+=1
-        print(f"Keeing an ear out. Retrying {6 - counter} more times.")
-
-
-# Removes audio file
-os.remove("./audio.wav")
+  # Removes audio file
+  os.remove("./audio.wav")
