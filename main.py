@@ -1,5 +1,5 @@
 import suppress
-suppress.suppress_jack_errors()
+# suppress.suppress_jack_errors()
 
 import record_voice
 import whisper
@@ -41,10 +41,10 @@ while True:
   # Records the voice of the user and transcribes it
   record_voice.record()
 
-  sound_file_duration = librosa.get_duration(path="./audio.wav")
+  sound_file_duration = librosa.get_duration(path="./tmp/audio.wav")
   
   if sound_file_duration > 1.6:
-    print("Awaiting Response....")
+    print("Transcribing....")
     transcribed_text = whisper.transcribe()
     
     if transcribed_text:
@@ -52,7 +52,7 @@ while True:
       ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
 
       # Allows Mocchan to speak
-      # speech.speak(ollama_response["answer"])
+      speech.speak(ollama_response["answer"])
 
       # Concats the user's transcribed text and the ollamas
       concat.concat_text(file_name, "user", transcribed_text)
@@ -84,4 +84,4 @@ while True:
       counter+=1
 
   # Removes audio file
-  os.remove("./audio.wav")
+  os.remove("./tmp/audio.wav")

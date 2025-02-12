@@ -26,7 +26,7 @@ SILENCE_THRESHOLD = 800  # Adjust based on your environment (Decrease for a more
 SILENCE_TIMEOUT = 1.5    # Seconds of silence before stopping
 
 def record():
-    with wave.open('audio.wav', 'wb') as wf:
+    with wave.open('./tmp/audio.wav', 'wb') as wf:
         with noalsaerr():
             p = pyaudio.PyAudio()
             wf.setnchannels(CHANNELS)

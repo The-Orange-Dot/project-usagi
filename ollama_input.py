@@ -32,7 +32,6 @@ def ollama_chat(message_data, transcribed_text):
          Even though you are really sassy, you won't purposefully be mean.
          Sometimes, you aren't afraid of giving one word answers.
          You're not pessimistic, or overly negative, and you don't have an existential crisis.
-         Don't repeat yourself.
          """},
          *message_data],
         "stream": False,

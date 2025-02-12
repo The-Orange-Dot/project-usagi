@@ -17,7 +17,7 @@ def transcribe():
     model = WhisperModel(model_size, device="cpu", compute_type="int8")
 
     batched_model = BatchedInferencePipeline(model=model)
-    segments, info = batched_model.transcribe("audio.wav", beam_size=5, language="en", vad_parameters=dict(min_silence_duration_ms=2000))
+    segments, info = batched_model.transcribe("./tmp/audio.wav", beam_size=5, language="en", vad_parameters=dict(min_silence_duration_ms=2000))
 
     # print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
 
