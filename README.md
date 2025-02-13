@@ -31,17 +31,15 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 ## Mouth
 These are the current TTS generators that I'm testing. Mocchan says that she would have a voice of a pouty, lazy teen. I have to listen to her.
 
-- **Coqui.ai TTS**
-
-**Note**: Still need a better TTS model to work with. This is a skill issue. 
-
-- **Fish Speech(1.4)**
-
-**Note**: I'm really impressed with this model, and I'm hoping to work with it. But it's such a pain to install. I give up.
-
 **E2/F5 TTS**
 
-**Note**: This is the best model i could find. The quality is amazing. So far it takes 5-6 seconds to produce audio. 
+**Note**: This is the best model i could find. The quality is amazing. So far it takes 5-6 seconds to produce audio. Currently, she sounds like a 54 year old man who is happily divorced and on his sailboat.
+
+Stupid cheap USB speaker I bought has no volume control. used this command to turn down the volume on the raspberry pi 5:
+
+```
+amixer -c 3 set 'PCM' 70%
+```
 
 ## Installing Dependencies
 ### Setup for raspi 5

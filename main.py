@@ -1,5 +1,5 @@
 import suppress
-# suppress.suppress_jack_errors()
+suppress.suppress_jack_errors()
 
 import record_voice
 import whisper
@@ -50,21 +50,24 @@ while True:
     if transcribed_text:
       # Calls Deepseek to respond to transcribed text
       ollama_response = ollama_input.ollama_chat(message_data, transcribed_text)
+      if ollama_response:
+        # Allows Mocchan to speak
+        better_grammar = ollama_response["answer"].replace("'", "\\'")
+        speech.speak(str(better_grammar))
 
-      # Allows Mocchan to speak
-      speech.speak(ollama_response["answer"])
+        # Concats the user's transcribed text and the ollamas
+        concat.concat_text(file_name, "user", transcribed_text)
+        concat.concat_text(file_name, "assistant", ollama_response["answer"])
 
-      # Concats the user's transcribed text and the ollamas
-      concat.concat_text(file_name, "user", transcribed_text)
-      concat.concat_text(file_name, "assistant", ollama_response["answer"])
+        print("")
+        print(f"\033[96m[YOU]: {transcribed_text}") # For Cyan colored text: \033[96m
+        print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
+        print("\033[37m") # Resets the color of text back to white
 
-      print("")
-      print(f"\033[96m[YOU]: {transcribed_text}") # For Cyan colored text: \033[96m
-      print(f"\033[92m[MOCCHAN]: " + ollama_response["answer"]) # For Green colored text: \033[92m
-      print("\033[37m") # Resets the color of text back to white
-
-      counter = 0
-      time.sleep(2)
+        counter = 0
+        time.sleep(2)
+      else:
+        pass
     else:
       print("No text to transcribe...")
   else:
