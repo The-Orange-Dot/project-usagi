@@ -31,7 +31,7 @@ def resample_audio(input_path, output_path, target_rate):
     y_resampled = librosa.resample(y, orig_sr=sr, target_sr=target_rate)
     sf.write(output_path, y_resampled, target_rate)
 
-def play(file_path, device_index):
+def play(file_path, device_index = 1):
     # Check file's current sample rate
     with wave.open(file_path, 'rb') as wf:
         file_rate = wf.getframerate()
@@ -42,8 +42,8 @@ def play(file_path, device_index):
     # Resample if needed
     if file_rate not in supported_rates:
         # print(f"Resampling from {file_rate} Hz to {supported_rates[0]} Hz")
-        resample_audio(file_path, "./tmp/output.wav", supported_rates[0])
-        file_path = "./tmp/output.wav"
+        resample_audio(file_path, "./output/output.wav", supported_rates[0])
+        file_path = "./output/output.wav"
     
     # Play the audio
     with wave.open(file_path, 'rb') as wf:

@@ -4,6 +4,7 @@ import pyaudio
 import numpy as np
 from contextlib import contextmanager
 from ctypes import CFUNCTYPE, c_char_p, c_int, c_char_p, cdll
+import os
 
 # Error suppression setup
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
@@ -23,6 +24,11 @@ SILENCE_THRESHOLD = 800
 SILENCE_TIMEOUT = 1.5
 
 def record():
+    
+    if os.path.exists("./input/audio.wav"):
+        # Removes audio file
+        os.remove("./input/audio.wav")
+
     with noalsaerr():
         p = pyaudio.PyAudio()
         device_info = p.get_default_input_device_info()
@@ -46,7 +52,7 @@ def record():
             # Fallback to 44100 Hz
             RATE = 44100
 
-        with wave.open('./tmp/audio.wav', 'wb') as wf:
+        with wave.open('./input/audio.wav', 'wb') as wf:
             wf.setnchannels(CHANNELS)
             wf.setsampwidth(p.get_sample_size(FORMAT))
             wf.setframerate(RATE)
