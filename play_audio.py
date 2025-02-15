@@ -67,6 +67,8 @@ def play(file_path, device_index = 1):
         duration = frames / float(rate)
         # print(f"Audio duration: {duration:.2f} seconds ({int(duration//60)}:{int(duration%60):02d})")
         
+        time.sleep(1)
+
         print("Listening...")
 
         # SET AUDIO VOLUME WITH amixer -c 3 set 'PCM' 70%

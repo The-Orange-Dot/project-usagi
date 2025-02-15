@@ -24,5 +24,7 @@ def transcribe():
     os.remove("./input/audio.wav")
 
     for segment in segments:
-        return segment.text
+        text = segment.text.replace("Nacchan", "nah-chan") #Makes Nacchan's name readable
+        print("WHISPER: " + text)
+        return text
 

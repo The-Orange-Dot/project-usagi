@@ -20,8 +20,8 @@ def noalsaerr():
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
-SILENCE_THRESHOLD = 800
-SILENCE_TIMEOUT = 1.5
+SILENCE_THRESHOLD = 600
+SILENCE_TIMEOUT = 2
 
 def record():
     

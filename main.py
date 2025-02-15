@@ -1,5 +1,7 @@
 import suppress
-# suppress.suppress_jack_errors()
+suppress.suppress_jack_errors()
+
+import asyncio
 import record_voice
 import whisper
 import os
@@ -27,7 +29,6 @@ if not os.path.exists(history_folder):
   os.mkdir('./mocchan')
 file_name = f"./mocchan/data.json"
 
-
 print()
 print("========================================")
 print("Starting up Mocchan")
@@ -42,7 +43,6 @@ if os.path.exists("./tmp/output.wav"):
 counter = 0
 
 while True:
-
   # Create tmp directory if needed
   os.makedirs('./input', exist_ok=True)
 

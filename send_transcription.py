@@ -10,13 +10,16 @@ port = os.getenv('SERVER_PORT')
 
 url = f"http://{server_ip}:{port}{endpoint}"
 
-
 def send_transcription(text):
     output_dir = "./output"
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, "output.wav")
     
     print(f"Client ready to write to: {os.path.abspath(output_path)}")
+
+    if os.path.exists("./output/output.wav"):
+      # Removes audio file
+      os.remove("./output/output.wav")
 
     try:
         print("Sending request to server...")
