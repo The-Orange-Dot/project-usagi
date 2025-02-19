@@ -18,10 +18,10 @@ This also gives me an oppertunity to learn Python and AI Tech. So something come
 - Pip
 
 ### Ears
-- **pyaudio** - For inputing voice and saving it as a wav file to inject into WhisperModel
-- **WhisperModel** - For transcribing audio into text
+- **pyaudio** - For inputing voice and saving it as a wav file to inject into WhisperModel.
+- **WhisperModel** - using faster-whisper for transcribing audio into text
 
-**Note**: This may sound like I'm stating water is wet, but you **need a mic** for this to work. I'm currently using a Raspi 5 to transcribe a tiny.en model. Hopefully I will get a NUC or something and run it on that to transcribe faster and more accurately in the future. The current transcribe time is about 2-3 seconds. Lets get it down to 1!
+**Note**: This may sound like I'm stating water is wet, but you **need a mic** for this to work. I'm currently using a Raspi 5 to transcribe a tiny.en model. Hopefully I will get a NUC or something and run it on that to transcribe faster and more accurately in the future. The current transcribe time is about 2-3 seconds. Lets get it down to 1! This pyaudio and and faster whisper
 
 ### Brain
 - **Ollama** - For generative ai (llama3.1)
@@ -33,7 +33,7 @@ These are the current TTS generators that I'm testing. Mocchan says that she wou
 
 **E2/F5 TTS**
 
-**Note**: This is the best model i could find. The quality is amazing. So far it takes 5-6 seconds to produce audio. Currently, she sounds like a 54 year old man who is happily divorced and on his sailboat.
+**Note**: This is the best model i could find. The quality is amazing but it's not super quick. I feel that it's loading the model twice, so that could be a factor. So far it takes 5-6 seconds to produce audio from speaking into the mic to outputing the audio. I've managed to change her voice to a young female voice and she no longer sounds like a 54 year old man who is happily divorced and on his sailboat.
 
 Stupid cheap USB speaker I bought has no volume control. used this command to turn down the volume on the raspberry pi 5:
 

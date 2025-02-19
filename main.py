@@ -5,29 +5,15 @@ import asyncio
 import record_voice
 import whisper
 import os
-import json
 from send_transcription import send_transcription
 import librosa
 from dotenv import load_dotenv
+from f5_socket import listen_to_voice
 load_dotenv()
 
 endpoint = os.getenv('API_ENDPOINT')
 server_ip = os.getenv('SERVER_IP')
 port = os.getenv('SERVER_PORT')
-
-# Loads json data of chat history
-with open('mocchan/data.json', "r") as file:
-  folder_path = "./mocchan"
-  file_name = "data.json"
-  file_path = os.path.join(folder_path, file_name)
-  with open(file_path, 'r+') as file:
-    message_data = json.load(file)
-
-# Creates folder for storing history
-history_folder = 'mocchan'
-if not os.path.exists(history_folder):
-  os.mkdir('./mocchan')
-file_name = f"./mocchan/data.json"
 
 print()
 print("========================================")
@@ -60,11 +46,8 @@ while True:
     counter = 0
 
     if transcribed_text:
-        result = send_transcription(transcribed_text)
-        if result:
-            print("Audio file saved successfully!")
-        else:
-            print("Failed to save audio file")
+        print("TRANSCRIBED TEXT: " + transcribed_text)
+        result = asyncio.run(listen_to_voice(transcribed_text))
     else:
       print("No text to transcribe...")
   else:

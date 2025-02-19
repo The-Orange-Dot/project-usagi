@@ -23,6 +23,11 @@ def send_transcription(text):
 
     try:
         print("Sending request to server...")
+
+        print("")
+        print(f"\n\033USER SAYS: " + text)
+        print(f"\033[37m")  # Reset color
+
         response = requests.post(
             url,
             json={'text': text}

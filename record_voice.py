@@ -20,15 +20,10 @@ def noalsaerr():
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
-SILENCE_THRESHOLD = 600
+SILENCE_THRESHOLD = 1000
 SILENCE_TIMEOUT = 2
 
 def record():
-    
-    if os.path.exists("./input/audio.wav"):
-        # Removes audio file
-        os.remove("./input/audio.wav")
-
     with noalsaerr():
         p = pyaudio.PyAudio()
         device_info = p.get_default_input_device_info()
@@ -52,41 +47,55 @@ def record():
             # Fallback to 44100 Hz
             RATE = 44100
 
+        stream = p.open(
+            format=FORMAT,
+            channels=CHANNELS,
+            rate=RATE,
+            input=True,
+            input_device_index=device_index,
+            frames_per_buffer=CHUNK
+        )
+
+        frames = []
+        consecutive_silent = 0
+        max_silent_chunks = int(SILENCE_TIMEOUT * RATE / CHUNK)
+
+        print("Recording...")
+        while True:
+            data = stream.read(CHUNK, exception_on_overflow=False)
+            frames.append(data)
+            
+            audio_data = np.frombuffer(data, dtype=np.int16)
+            if CHANNELS > 1:
+                audio_data = audio_data.reshape(-1, CHANNELS)
+                rms = np.max(np.sqrt(np.mean(audio_data**2, axis=0) + 1e-7))
+            else:
+                rms = np.sqrt(np.mean(audio_data**2) + 1e-7)
+
+            if rms > SILENCE_THRESHOLD or np.isnan(rms):
+                consecutive_silent = 0
+            else:
+                consecutive_silent += 1
+
+            if consecutive_silent > max_silent_chunks:
+                break
+
+        stream.close()
+        
+        # Generate 1-second silence buffers
+        samples_per_buffer = RATE * CHANNELS
+        front_silence = np.zeros(samples_per_buffer, dtype=np.int16).tobytes()
+        back_silence = np.zeros(samples_per_buffer, dtype=np.int16).tobytes()
+        
+        # Combine audio with buffers
+        combined_data = front_silence + b''.join(frames) + back_silence
+
+        # Save to file
+        os.makedirs("./input", exist_ok=True)
         with wave.open('./input/audio.wav', 'wb') as wf:
             wf.setnchannels(CHANNELS)
             wf.setsampwidth(p.get_sample_size(FORMAT))
             wf.setframerate(RATE)
+            wf.writeframes(combined_data)
 
-            stream = p.open(
-                format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                input_device_index=device_index,
-                frames_per_buffer=CHUNK
-            )
-
-            consecutive_silent = 0
-            max_silent_chunks = int(SILENCE_TIMEOUT * RATE / CHUNK)
-
-            while True:
-                data = stream.read(CHUNK, exception_on_overflow=False)
-                wf.writeframes(data)
-                
-                audio_data = np.frombuffer(data, dtype=np.int16)
-                if CHANNELS > 1:
-                    audio_data = audio_data.reshape(-1, CHANNELS)
-                    rms = np.max(np.sqrt(np.mean(audio_data**2, axis=0) + 1e-7))
-                else:
-                    rms = np.sqrt(np.mean(audio_data**2) + 1e-7)
-
-                if rms > SILENCE_THRESHOLD or np.isnan(rms):
-                    consecutive_silent = 0
-                else:
-                    consecutive_silent += 1
-
-                if consecutive_silent > max_silent_chunks:
-                    break
-
-            stream.close()
-            p.terminate()
+        p.terminate()
